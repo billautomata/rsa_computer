@@ -127,8 +127,13 @@ There is a memory efficient algorithm to perform the `CT^D mod N` calculation.
 // after performing 'E' routines.  In this case 320525 iterations of the while loop are performed.
 
 // this is a memory efficient encrypt and decrypt operations
+#include <msp430.h>				
 #define BIT0 (0x0001)
 #define BIT6 (0x0040)
+
+unsigned int modular_exponentiation(unsigned int cipher_text, unsigned int exponent, unsigned int publickey);
+
+
 
 int main(void) {
 	WDTCTL = WDTPW | WDTHOLD;		// Stop watchdog timer
@@ -145,14 +150,14 @@ int main(void) {
 
   // (plaintext^exponent) mod publickey
   // (PT^E) mod N
-  unsigned int CT = modular_exponentiation(plaintext, 5, 402047)
+  unsigned int CT = modular_exponentiation(plaintext, 5, 402047);
 
   // CT = 117180
 
   // decrypt
   // (ciphertext^secretkey) mod publickey
   // (CT^D) mod N
-  unsigned int decrypted_plaintext = modular_exponentiation(CT, 320525, 402047)
+  unsigned int decrypted_plaintext = modular_exponentiation(CT, 320525, 402047);
 
   if(plaintext == decrypted_plaintext){
     // set the GREEN led
@@ -165,16 +170,17 @@ int main(void) {
 	return 0;
 }
 
-unsigned int modular_exponentiation(unsigned int CT, unsigned int E, unsigned int N){
+
+unsigned int modular_exponentiation (unsigned int cipher_text, unsigned int exponent, unsigned int publickey){
   unsigned int c = 1;
-  //unsigned int CT = 4;
-  //unsigned int E = 13;
+//  unsigned int CT = 4;
+//  unsigned int E = 13;
   unsigned int e_prime = 0; // our counter variable
-  //unsigned int N = 497;
-	while(e_prime < E){
+//   unsigned int N = 497;
+	while(e_prime < exponent){
 		e_prime = e_prime + 1;
-		c = c * b;
-		c = c % m;
+		c = c * cipher_text;
+		c = c % publickey;
 	}
   // c is the plaintext
   return c;
