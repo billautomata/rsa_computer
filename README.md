@@ -134,8 +134,11 @@ There is a memory efficient algorithm to perform the `CT^D mod N` calculation.
 unsigned long modular_exponentiation(unsigned long cipher_text, unsigned long exponent, unsigned long publickey);
 
 unsigned long plaintext = 30;
-unsigned long ciphertext;
-unsigned long decrypted_plaintext;
+unsigned long ciphertext = 0;
+unsigned long exponent = 5;
+unsigned long publickey = 402047;
+unsigned long privatekey = 320525;
+unsigned long decrypted_plaintext = 0;
 
 void main(void) {
 	WDTCTL = WDTPW | WDTHOLD;		// Stop watchdog timer
@@ -160,12 +163,12 @@ void main(void) {
 
   // (plaintext^exponent) mod publickey
   // (PT^E) mod N
-  ciphertext = modular_exponentiation(plaintext, 5, 402047);
+  ciphertext = modular_exponentiation(plaintext, exponent, publickey);
 
   // decrypt
   // (ciphertext^secretkey) mod publickey
   // (CT^D) mod N
-  decrypted_plaintext = modular_exponentiation(ciphertext, 320525, 402047);
+  decrypted_plaintext = modular_exponentiation(ciphertext, privatekey, publickey);
 
   if(plaintext == decrypted_plaintext){
     // set the GREEN led
