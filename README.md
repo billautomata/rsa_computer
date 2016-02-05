@@ -127,37 +127,38 @@ There is a memory efficient algorithm to perform the `CT^D mod N` calculation.
 // after performing 'E' routines.  In this case 320525 iterations of the while loop are performed.
 
 // this is a memory efficient encrypt and decrypt operations
+
 #include <msp430.h>				
 #define BIT0 (0x0001)
 #define BIT6 (0x0040)
 
-unsigned int modular_exponentiation(unsigned int cipher_text, unsigned int exponent, unsigned int publickey);
+unsigned long modular_exponentiation(unsigned int cipher_text, unsigned int exponent, unsigned int publickey);
 
+unsigned int plaintext = 65;
+unsigned long ciphertext;
+unsigned long decrypted_plaintext;
 
-
-int main(void) {
+void main(void) {
 	WDTCTL = WDTPW | WDTHOLD;		// Stop watchdog timer
 	P1DIR |= (BIT0 | BIT6);					// Set P1.0 to output direction
 	P1OUT = 0;
 
-
-  // exponent = 5
-  // public key = 402047
-  // private key = 320525
+  // exponent = 17
+  // public key = 3233
+  // private key = 2753
 
   // encrypt
-  unsigned int plaintext = 30;
+  // plaintext = 65;
 
   // (plaintext^exponent) mod publickey
   // (PT^E) mod N
-  unsigned int CT = modular_exponentiation(plaintext, 5, 402047);
-
-  // CT = 117180
+  ciphertext = modular_exponentiation(plaintext, 17, 3233);
+  // ciphertext = 2790
 
   // decrypt
   // (ciphertext^secretkey) mod publickey
   // (CT^D) mod N
-  unsigned int decrypted_plaintext = modular_exponentiation(CT, 320525, 402047);
+  decrypted_plaintext = modular_exponentiation(ciphertext, 2753, 3233);
 
   if(plaintext == decrypted_plaintext){
     // set the GREEN led
@@ -167,23 +168,21 @@ int main(void) {
     P1OUT = BIT0;
   }
 
-	return 0;
+	//return 0;
 }
 
 
-unsigned int modular_exponentiation (unsigned int cipher_text, unsigned int exponent, unsigned int publickey){
-  unsigned int c = 1;
-//  unsigned int CT = 4;
-//  unsigned int E = 13;
+unsigned long modular_exponentiation (unsigned int cipher_text, unsigned int exponent, unsigned int publickey){
+  unsigned long c = 1;
   unsigned int e_prime = 0; // our counter variable
-//   unsigned int N = 497;
-	while(e_prime < exponent){
-		e_prime = e_prime + 1;
-		c = c * cipher_text;
-		c = c % publickey;
-	}
+  while(e_prime < exponent){
+	  e_prime = e_prime + 1;
+	  c = c * cipher_text;
+	  c = c % publickey;
+  }
   // c is the plaintext
   return c;
 }
+
 
 ```
