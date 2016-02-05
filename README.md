@@ -127,18 +127,19 @@ There is a memory efficient algorithm to perform the `CT^D mod N` calculation.
 // after performing 'E' routines.  In this case 320525 iterations of the while loop are performed.
 
 // this is a memory efficient encrypt and decrypt operations
+
 #include <msp430.h>				
 #define BIT0 (0x0001)
 #define BIT6 (0x0040)
 
-unsigned long modular_exponentiation(unsigned long cipher_text, unsigned long exponent, unsigned long publickey);
+long long modular_exponentiation(long long cipher_text, long long exponent, long long publickey);
 
-unsigned long plaintext = 30;
-unsigned long ciphertext = 0;
-unsigned long exponent = 5;
-unsigned long publickey = 402047;
-unsigned long privatekey = 320525;
-unsigned long decrypted_plaintext = 0;
+long long plaintext = 30;
+long long ciphertext = 0;
+long long exponent = 5;
+long long publickey = 402047;
+long long privatekey = 320525;
+long long decrypted_plaintext = 0;
 
 void main(void) {
 	WDTCTL = WDTPW | WDTHOLD;		// Stop watchdog timer
@@ -182,9 +183,9 @@ void main(void) {
 }
 
 
-unsigned long modular_exponentiation (unsigned long cipher_text, unsigned long exponent, unsigned long publickey){
-  unsigned long c = 1;
-  unsigned long e_prime = 0; // our counter variable
+long long modular_exponentiation (long long cipher_text, long long exponent, long long publickey){
+  long long c = 1;
+  long long e_prime = 0; // our counter variable
   while(e_prime < exponent){
 	  e_prime = e_prime + 1;
 	  if(e_prime % 2){
@@ -192,7 +193,6 @@ unsigned long modular_exponentiation (unsigned long cipher_text, unsigned long e
 	  } else {
 	   P1OUT = BIT6;
 	  }
-	  // P1OUT = e_prime % 2;
 	  c = c * cipher_text;
 	  c = c % publickey;
   }
@@ -200,5 +200,4 @@ unsigned long modular_exponentiation (unsigned long cipher_text, unsigned long e
   P1OUT = 0;
   return c;
 }
-
 ```
