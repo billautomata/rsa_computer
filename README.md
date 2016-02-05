@@ -165,12 +165,12 @@ int main(void) {
 	return 0;
 }
 
-unsigned int modular_exponentiation(CT, E, N){
+unsigned int modular_exponentiation(unsigned int CT, unsigned int E, unsigned int N){
   unsigned int c = 1;
-  unsigned int CT = 4;
-  unsigned int E = 13;
+  //unsigned int CT = 4;
+  //unsigned int E = 13;
   unsigned int e_prime = 0; // our counter variable
-  unsigned int N = 497;
+  //unsigned int N = 497;
 	while(e_prime < E){
 		e_prime = e_prime + 1;
 		c = c * b;
