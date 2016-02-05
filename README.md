@@ -132,9 +132,9 @@ There is a memory efficient algorithm to perform the `CT^D mod N` calculation.
 #define BIT0 (0x0001)
 #define BIT6 (0x0040)
 
-unsigned long modular_exponentiation(unsigned int cipher_text, unsigned int exponent, unsigned int publickey);
+unsigned long modular_exponentiation(unsigned long cipher_text, unsigned long exponent, unsigned long publickey);
 
-unsigned int plaintext = 65;
+unsigned long plaintext = 30;
 unsigned long ciphertext;
 unsigned long decrypted_plaintext;
 
@@ -143,22 +143,30 @@ void main(void) {
 	P1DIR |= (BIT0 | BIT6);					// Set P1.0 to output direction
 	P1OUT = 0;
 
+  // smaller test values
   // exponent = 17
   // public key = 3233
   // private key = 2753
+  // plaintext = 65
+  // ciphertext = 2790
+
+  // larger
+  // exponent = 5
+  // public key = 402047
+  // private key = 320525
+  // plaintext = 30
+  // ciphertext = 177180
 
   // encrypt
-  // plaintext = 65;
 
   // (plaintext^exponent) mod publickey
   // (PT^E) mod N
-  ciphertext = modular_exponentiation(plaintext, 17, 3233);
-  // ciphertext = 2790
+  ciphertext = modular_exponentiation(plaintext, 5, 402047);
 
   // decrypt
   // (ciphertext^secretkey) mod publickey
   // (CT^D) mod N
-  decrypted_plaintext = modular_exponentiation(ciphertext, 2753, 3233);
+  decrypted_plaintext = modular_exponentiation(ciphertext, 320525, 402047);
 
   if(plaintext == decrypted_plaintext){
     // set the GREEN led
@@ -172,11 +180,12 @@ void main(void) {
 }
 
 
-unsigned long modular_exponentiation (unsigned int cipher_text, unsigned int exponent, unsigned int publickey){
+unsigned long modular_exponentiation (unsigned long cipher_text, unsigned long exponent, unsigned long publickey){
   unsigned long c = 1;
-  unsigned int e_prime = 0; // our counter variable
+  unsigned long e_prime = 0; // our counter variable
   while(e_prime < exponent){
 	  e_prime = e_prime + 1;
+	  P1OUT = e_prime % 2;
 	  c = c * cipher_text;
 	  c = c % publickey;
   }
