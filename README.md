@@ -127,10 +127,14 @@ There is a memory efficient algorithm to perform the `CT^D mod N` calculation.
 // after performing 'E' routines.  In this case 320525 iterations of the while loop are performed.
 
 // this is a memory efficient encrypt and decrypt operations
-
+#define BIT0 (0x0001)
+#define BIT6 (0x0040)
 
 int main(void) {
 	WDTCTL = WDTPW | WDTHOLD;		// Stop watchdog timer
+	P1DIR |= (BIT0 | BIT6);					// Set P1.0 to output direction
+	P1OUT = 0;
+
 
   // exponent = 5
   // public key = 402047
@@ -148,12 +152,20 @@ int main(void) {
   // decrypt
   // (ciphertext^secretkey) mod publickey
   // (CT^D) mod N
-  unsigned int PT = modular_exponentiation(CT, 320525, 402047)
+  unsigned int decrypted_plaintext = modular_exponentiation(CT, 320525, 402047)
+
+  if(plaintext == decrypted_plaintext){
+    // set the GREEN led
+    P1OUT = BIT6;
+  } else {
+    // set the RED led
+    P1OUT = BIT0;
+  }
 
 	return 0;
 }
 
-function modular_exponentiation(CT, E, N){
+unsigned int modular_exponentiation(CT, E, N){
   unsigned int c = 1;
   unsigned int CT = 4;
   unsigned int E = 13;
