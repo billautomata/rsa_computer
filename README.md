@@ -127,7 +127,6 @@ There is a memory efficient algorithm to perform the `CT^D mod N` calculation.
 // after performing 'E' routines.  In this case 320525 iterations of the while loop are performed.
 
 // this is a memory efficient encrypt and decrypt operations
-
 #include <msp430.h>				
 #define BIT0 (0x0001)
 #define BIT6 (0x0040)
@@ -185,13 +184,18 @@ unsigned long modular_exponentiation (unsigned long cipher_text, unsigned long e
   unsigned long e_prime = 0; // our counter variable
   while(e_prime < exponent){
 	  e_prime = e_prime + 1;
-	  P1OUT = e_prime % 2;
+	  if(e_prime % 2){
+	   P1OUT = BIT0;
+	  } else {
+	   P1OUT = BIT6;
+	  }
+	  // P1OUT = e_prime % 2;
 	  c = c * cipher_text;
 	  c = c % publickey;
   }
   // c is the plaintext
+  P1OUT = 0;
   return c;
 }
-
 
 ```
