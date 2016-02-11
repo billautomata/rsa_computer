@@ -1,7 +1,6 @@
 # rsa_computer
 msp430 based rsa computer
 
-
 ## key generation
 
 * `Step 1` Choose two prime numbers, P & Q.
@@ -96,7 +95,7 @@ Create the cipher-text (CT) from the plain-text (PT) and the public key (E, N)
 
 ```
 CT = PT^E mod N
-CT = 30^5 mod 40247
+CT = 30^5 mod 402047
 CT = 117180
 ```
 [wolfram alpha link to results of this calculation](http://www.wolframalpha.com/input/?i=30%5E5+mod+40247)
