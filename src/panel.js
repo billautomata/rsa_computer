@@ -3,9 +3,10 @@ var draw_number_as_leds = require('./draw_numbers_as_leds.js')
 
 module.exports = function () {
   var parent = d3.select('body').append('div').attr('class', 'container').append('div').attr('class', 'col-md-6')
+  parent.append('h3').attr('class', 'text-center').html('RSA Computer Simulator')
 
-  var howto = parent.append('div').attr('class','col-md-12 text-center')
-  howto.html('Select P and Q values to generate the keys.  Choose a plaintext value to encrypt.  All of these values need to be integers.')
+  var howto = parent.append('h5').attr('class', 'col-md-12 text-center')
+  howto.html('Select P and Q values.  Ensure they are prime.<br>Choose a plaintext value.<br>All of these numbers should be integers or it does not work.')
 
   // append inputs that change p and q
   var parent_input = parent.append('div').attr('class', 'col-md-12').style('margin-bottom', '10px')

@@ -40,4 +40,4 @@ if(process.env.HTTPS && process.env.HTTPS === '1'){
 //     res.end("hello world\n");
 // });
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/'))

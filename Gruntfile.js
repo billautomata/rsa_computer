@@ -10,10 +10,10 @@ module.exports = function (grunt) {
 
     browserify: {
       main: {
-        src: 'public/src/main.js',
-        dest: 'public/build/bundle.js',
+        src: 'src/main.js',
+        dest: 'build/bundle.js',
         files: {
-          'public/build/bundle.js': ['./public/src/*.js'],
+          'build/bundle.js': ['./src/*.js'],
         },
         options: {
           transform: ['brfs'],
@@ -30,13 +30,13 @@ module.exports = function (grunt) {
           force: true
         },
         src: [
-          './public/src/*.js'
+          './src/*.js'
         ]
       }
     },
     watch: {
       everything: {
-        files: ['./public/*.html','./public/src/*.js', './public/css/*.css' ],
+        files: ['./*.html','./src/*.js', './css/*.css' ],
         tasks: ['standard', 'browserify'],
         options: {
           livereload: {
