@@ -9598,8 +9598,7 @@ module.exports = function draw_number_as_leds (v, msg, parent) {
 },{}],3:[function(require,module,exports){
 var panel = require('./panel.js')
 
-var user1 = panel()
-console.log(user1)
+panel()
 
 },{"./panel.js":4}],4:[function(require,module,exports){
 var d3 = require('d3')
@@ -9629,6 +9628,7 @@ module.exports = function () {
   var p = 47
   var q = 53
   var PT = 30
+  var iteration_speed = 500
 
   input_p.attr('value', p)
   input_q.attr('value', q)
@@ -9674,6 +9674,24 @@ module.exports = function () {
     n_dirty = phi_dirty = e_dirty = d_dirty = encrypt_dirty = decrypt_dirty = true
     status_plaintext_greater_than_n.html('')
     status_decrypt_encrypt_checker.html('')
+    iteration_speed = 500
+    panel_P(p)
+    panel_Q(q)
+    panel_N(0)
+    panel_PHI(0)
+    panel_E(0)
+    panel_D(0)
+    panel_NT(0)
+    panel_R(0)
+    panel_NR(0)
+    panel_QUOT(0)
+    panel_tmp(0)
+    panel_PT(PT)
+    panel_encrypt_eprime(0)
+    panel_CT(0)
+    panel_decrypt_eprime(0)
+    panel_decrypted_PT(0)
+    setTimeout(global_tick, iteration_speed)
   }
 
   var n_dirty = true
@@ -9729,7 +9747,7 @@ module.exports = function () {
 
   // tick stuff
   var interval_step = 0
-  setInterval(global_tick, 0)
+  setTimeout(global_tick, iteration_speed)
   function global_tick () {
     // console.log('interval_step', interval_step)
     interval_step++
@@ -9742,14 +9760,14 @@ module.exports = function () {
       if (n < PT) {
         status_plaintext_greater_than_n.html('warning key too small for message size, decrease message size or increase key length with larger P and Q values')
       }
-      return
+      return setTimeout(global_tick, iteration_speed)
     }
     if (phi_dirty) {
       phi = (p - 1) * (q - 1)
       panel_PHI(phi)
       phi_dirty = false
       console.log('setting PHI', phi)
-      return
+      return setTimeout(global_tick, iteration_speed)
     }
     if (e_dirty) {
       // pick the next prime in the list
@@ -9767,7 +9785,7 @@ module.exports = function () {
         console.log('setting e', e)
         e_dirty = false
       }
-      return
+      return setTimeout(global_tick, iteration_speed)
     }
     if (d_dirty) {
       status_current_state.html('calculating private key')
@@ -9810,7 +9828,7 @@ module.exports = function () {
           d_dirty = false
         }
       }
-      return
+      return setTimeout(global_tick, iteration_speed)
     }
     if (encrypt_dirty) {
       status_current_state.html('encrypting')
@@ -9833,9 +9851,10 @@ module.exports = function () {
         panel_encrypt_eprime(e_prime)
         panel_CT(CT)
       }
-      return
+      return setTimeout(global_tick, iteration_speed)
     }
     if (decrypt_dirty) {
+      iteration_speed = 0
       status_current_state.html('decrypting')
       if (decrypt_setup_complete === false) {
         DPT = 1
@@ -9859,16 +9878,13 @@ module.exports = function () {
           } else {
             status_decrypt_encrypt_checker.html('<p>plaintext & decrypted plaintext match</p><p>' + [DPT, '===', PT].join(' ') + '</p>')
           }
-
         }
         panel_decrypt_eprime(_e_prime)
         panel_decrypted_PT(DPT)
-
       }
-      return
+      return setTimeout(global_tick, iteration_speed)
     }
   }
-
 }
 
 },{"./draw_numbers_as_leds.js":2,"d3":1}]},{},[3]);
