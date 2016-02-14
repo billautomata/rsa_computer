@@ -9554,7 +9554,7 @@
 }();
 },{}],2:[function(require,module,exports){
 module.exports = function draw_number_as_leds (v, msg, parent) {
-  var n_bits = 20
+  var n_bits = 32
   var h = 24
   var w = (3 + n_bits) * h
   var svg = parent.append('div').append('svg')
@@ -9746,11 +9746,11 @@ module.exports = function () {
   var status_decrypt_encrypt_checker = status_parent.append('h4').attr('class', 'text-center').html('')
 
   // tick stuff
-  var interval_step = 0
+  window.interval_step = 0
   setTimeout(global_tick, iteration_speed)
   function global_tick () {
     // console.log('interval_step', interval_step)
-    interval_step++
+    window.interval_step++
     if (n_dirty) {
       status_current_state.html('key generation (intial steps)')
       n = p * q
@@ -9864,21 +9864,25 @@ module.exports = function () {
         decrypt_setup_complete = true
       } else {
         // perform iterative calcs
-        if (_e_prime < D) {
-          _e_prime += 1
-          status_current_state.html('DECRYPTING: ' + (100.0 * (_e_prime / D)).toFixed(0) + '%')
-          DPT = DPT * CT
-          DPT = DPT % n
-        } else {
-          console.log('setting decrypted plaintext', DPT)
-          decrypt_dirty = false
-          status_current_state.html('done decrypting')
-          if (DPT !== PT) {
-            status_decrypt_encrypt_checker.html('<p>plaintext & decrypted plaintext mismatch</p><p>Do you have prime P and Q values? Is your plaintext message larger than your key size?</p><p>' + [DPT, '!==', PT].join(' ') + '</p>')
+        var n_calcs = Math.ceil(D / 100)
+        while (n_calcs--) {
+          if (_e_prime < D) {
+            _e_prime += 1
+            status_current_state.html('DECRYPTING: ' + (100.0 * (_e_prime / D)).toFixed(0) + '%')
+            DPT = DPT * CT
+            DPT = DPT % n
           } else {
-            status_decrypt_encrypt_checker.html('<p>plaintext & decrypted plaintext match</p><p>' + [DPT, '===', PT].join(' ') + '</p>')
+            console.log('setting decrypted plaintext', DPT)
+            decrypt_dirty = false
+            status_current_state.html('done decrypting')
+            if (DPT !== PT) {
+              status_decrypt_encrypt_checker.html('<p>plaintext & decrypted plaintext mismatch</p><p>Do you have prime P and Q values? Is your plaintext message larger than your key size?</p><p>' + [DPT, '!==', PT].join(' ') + '</p>')
+            } else {
+              status_decrypt_encrypt_checker.html('<p>plaintext & decrypted plaintext match</p><p>' + [DPT, '===', PT].join(' ') + '</p>')
+            }
           }
         }
+
         panel_decrypt_eprime(_e_prime)
         panel_decrypted_PT(DPT)
       }

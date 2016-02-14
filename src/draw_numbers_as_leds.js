@@ -1,5 +1,5 @@
 module.exports = function draw_number_as_leds (v, msg, parent) {
-  var n_bits = 20
+  var n_bits = 32
   var h = 24
   var w = (3 + n_bits) * h
   var svg = parent.append('div').append('svg')
