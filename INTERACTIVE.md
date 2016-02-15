@@ -1,7 +1,6 @@
-* [ ] pick P or Q or plaintext
+* [x] pick P or Q or plaintext
+* [x] separate computation speed for keygen + decrypt
 * [ ] pick speed
-  * separate computation speed for keygen + decrypt
-
 * [x] each tick the dirty steps are cleaned up
   * if p or q are changed, then keys are dirty and you generate
     * [x] new N
