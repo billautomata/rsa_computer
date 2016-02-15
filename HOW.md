@@ -10,5 +10,5 @@
 * `NSA` intercepts the `ciphertext message`
 * `PANEL_B` decrypts the `ciphertext message` using the `PANEL_B private key` to create the `decrypted plaintext message`
 * `NSA` factors the `PANEL_B public key`
-* `NSA` generates the `Cracked PANEL_B private key`
-* `NSA` decrypts the `ciphertext message` with the `Cracked PANEL_B private key` to create the `cracked plaintext message`
+* `NSA` generates the `cracked PANEL_B private key`
+* `NSA` decrypts the `ciphertext message` with the `cracked PANEL_B private key` to create the `cracked plaintext message`
