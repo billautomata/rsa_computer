@@ -10,7 +10,7 @@ unsigned long long p;
 unsigned long long q;
 unsigned long long n;
 unsigned long long phi;
-unsigned long long exponent = 5;
+unsigned long long exponent;
 
 unsigned long long plaintext = 30;
 unsigned long long ciphertext = 0;
@@ -18,6 +18,8 @@ unsigned long long decrypted_plaintext = 0;
 
 unsigned long long publickey;
 unsigned long long privatekey;
+
+unsigned long long possible_exponents[16] = { 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59 };
 
 void setup()
 {
@@ -29,7 +31,7 @@ void setup()
     P1DIR |= (BIT0 | BIT6);                 // Set P1.0 to output direction
     P1OUT = 0;
 
-//  p = 251; q = 241; exponent = 7;  // 8 bit
+//  p = 251; q = 241;                // 8 bit
 //  p = 409; q = 983;                // 10 bit
 //  p = 48619; q = 48623;            // 16 bit
 //  p = 157211; q = 167711;          // 18 bit
@@ -38,7 +40,23 @@ void setup()
 //  p = 4158903607; q = 4165674413;  // 32 bit
 
   n = p*q;
-  phi = (p-1) * (q-1); 
+  phi = (p-1) * (q-1);
+ 
+  boolean exponent_found = false; 
+  uint8_t exponent_index = 0;
+  while(!exponent_found){
+    if(phi % possible_exponents[exponent_index] != 0){
+      exponent = possible_exponents[exponent_index];
+      exponent_found = true;
+    } else {
+      exponent_index++;
+      if(exponent_index >= 16){
+        Serial.println("No good exponent found.");
+        return;
+      }
+    }
+  }
+  
   
   publickey = n;
   
@@ -46,6 +64,8 @@ void setup()
   
   Serial.println("public key");
   Serial.println((unsigned long)publickey);
+  Serial.println("exponent");
+  Serial.println((unsigned long)exponent);
   Serial.println("private key");
   Serial.println((unsigned long)privatekey);
 
@@ -83,17 +103,9 @@ void setup()
     // set the RED led
     P1OUT = BIT0;
   }
-
-  //return 0;
-    
 }
 
-void loop()
-{
-  // put your main code here, to run repeatedly:
-  
-}
-
+void loop(){}
 
 unsigned long long modular_exponentiation (unsigned long long cipher_text, unsigned long long exponent, unsigned long long publickey){
   unsigned long long c = 1;
@@ -109,8 +121,8 @@ unsigned long long modular_exponentiation (unsigned long long cipher_text, unsig
       c = c * cipher_text;
       c = c % publickey;
   }
-  // c is the plaintext
   P1OUT = 0;
+  // c is the plaintext  
   return c;
 }
 
