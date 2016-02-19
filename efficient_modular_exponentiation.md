@@ -22,7 +22,7 @@ Add 1 to k, and move left to the next digit
 5^117 mod 19 = (5^1 * 5^5 * 5^16 * 5^32 * 5^64) mod 19
 ```
 
-Step 2: Calculate mod C of the powers of two ≤ B
+Step 2: Calculate mod C of the powers of two ≤ B, even the ones that aren't useful.
 ```
 5^1 mod 19 = 5
 
