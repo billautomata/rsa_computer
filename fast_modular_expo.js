@@ -1,5 +1,6 @@
-fast_modular_expo(5,117,19)
-fast_modular_expo(44336,17143,60491)
+// fast_modular_expo(5,117,19)
+// fast_modular_expo(44336,17143,60491)
+fast_modular_expo(177180,320525,402047)
 
 function fast_modular_expo(a,b,c){
 
