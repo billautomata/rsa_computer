@@ -65,12 +65,19 @@ I take your public key `(19, 5, 23)` and combine it with my secret number `6` to
 ![screen shot 2016-02-19 at 9 35 08 pm](https://cloud.githubusercontent.com/assets/432483/13194712/aeabc59e-d750-11e5-843d-75ee06f5cc81.png)
 
 ## cracking stats
+
+### MSP430 benchmarks
+
 An MSP430 can perform `~188 tries / second`.
 
 Cracking a `24 bit` secret number would take `19 days`
 Cracking a `16 bit` secret number would take `~5 minutes`
 
-
 #### benchmarks
 * Cracking `65519` a `16 bit number` took `6 minutes 58 seconds`
-* Cracking `167711` a `18 bit number` took `18 minutes 47 seconds` 
+* Cracking `167711` a `18 bit number` took `18 minutes 47 seconds`
+
+
+### MSP432 benchmarks
+* Cracking `65519` a `16 bit number` took `8 seconds`
+* Cracking `167711` a `18 bit number` took `35 seconds`
