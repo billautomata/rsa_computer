@@ -82,6 +82,7 @@ An MSP430 can perform `~188 tries / second`.
 #### estimates
 * Cracking a `24 bit` secret number would take `19 days`
 * Cracking a `16 bit` secret number would take `~5 minutes`
+
 #### benchmarks
 * Cracking `65519` a `16 bit number` took `6 minutes 58 seconds`
 * Cracking `167711` a `18 bit number` took `18 minutes 47 seconds` (144/sec)
@@ -89,6 +90,7 @@ An MSP430 can perform `~188 tries / second`.
 ### MSP432 benchmarks
 #### estimates
 An MSP432 can perform `4000 - 8000 tries / second`
+
 #### benchmarks
 * Cracking `65519` a `16 bit number` took `8 seconds`
 * Cracking `167711` a `18 bit number` took `35 seconds`
