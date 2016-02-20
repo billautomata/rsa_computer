@@ -4,18 +4,20 @@ unsigned long long ipow(unsigned long long b, unsigned long long e);
 unsigned long long fme(unsigned long long a, unsigned long long b, unsigned long long c);
 
 unsigned long long p = 23;
-unsigned long long g = 5;
-unsigned long long alice_secret = 14384393;
+unsigned long long g = 5;         
+unsigned long long alice_secret = 67108864;
 unsigned long long alice_public;
-unsigned long long bob_secret = 15053471;
+unsigned long long bob_secret = 12582912;  // 24 bit
 unsigned long long bob_public;
 
 void setup()
 {
   
-  p = 157211; g = 167711;
+//  p = (157211*2)+1; g = 5;
+  p = (157211*2)+1; g = 2;
   
   Serial.begin(9600); 
+  delay(100);
 
   P1DIR |= (BIT0 | BIT6);                 // Set P1.0 to output direction
   P1OUT = 0;

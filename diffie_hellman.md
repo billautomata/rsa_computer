@@ -60,6 +60,16 @@ I take your public key `(19, 5, 23)` and combine it with my secret number `6` to
 (my_public_key ^ your_secret_number) mod 23 = (your_public_key ^ my_secret_number) mod 23
 ```
 
-# We do not encrypt with the keys, we arrive at the same value together, using the other persons public key and our private key.  We use that value to encrypt the data symmetrically.
+## We do not encrypt with the keys, using our private number and the other persons public number, we arrive at the same value together. We use that value to encrypt data symmetrically.
 
 ![screen shot 2016-02-19 at 9 35 08 pm](https://cloud.githubusercontent.com/assets/432483/13194712/aeabc59e-d750-11e5-843d-75ee06f5cc81.png)
+
+## cracking stats
+An MSP430 can perform `~188 tries / second`.
+
+Cracking a `24 bit` secret number would take `19 days`
+Cracking a `16 bit` secret number would take `~5 minutes`
+
+
+#### benchmarks
+* Cracking `65519` a `16 bit number` took `6 minutes 58 seconds`
