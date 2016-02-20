@@ -1,7 +1,7 @@
 # every step diffie hellman
 
 * 2 user computers, interactive
-* 1 internet computer, non-interactive
+* 2 internet computers (key server, message server), non-interactive
 * 1 NSA computer, non-interactive
 
 ## user computer
