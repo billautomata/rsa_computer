@@ -13,13 +13,15 @@ unsigned long long bob_public;
 void setup()
 {
 
-  bob_secret = 65519;     // 16 bit, prime
-//  bob_secret = 167711;    // 18 bit, prime
+//  bob_secret = 65519;     // 16 bit, prime
+  bob_secret = 167711;    // 18 bit, prime
 //  bob_secret = 15053471;  // 24 bit, prime
 //  bob_secret = 14384393;  // 24 bit, prime
 
   // groups  
-  p = (157211*2)+1; g = 2;  // good
+//  p = (157211*2)+1; g = 2;  // good (bad with 167711)
+  p = (157211*2)+1; g = 5;  // good (good with 65519, and 167711)
+  
 
   Serial.begin(9600); 
   delay(100);

@@ -13,8 +13,7 @@ unsigned long long bob_public;
 void setup()
 {
   
-//  p = (157211*2)+1; g = 5;
-  p = (157211*2)+1; g = 2;
+  p = (157211*2)+1; g = 5;
   
   Serial.begin(9600); 
   delay(100);
