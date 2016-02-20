@@ -35,9 +35,9 @@
   * (`msg`, `g`, `p`, `public_a`, `public_b`)
 2. crack either `public_a` or `public_b`
   * crack `private_a` from `public_a`, `g`, and `p`.
-    * calculate the shared secret `(public_b ^ private_a) mod p`
+    * calculate the `shared secret` = `(public_b ^ private_a) mod p`
   * crack `private_b` from `public_b`, `g`, and `p`.
-    * calculate the `shared secret` `(public_a ^ private_b) mod p`
+    * calculate the `shared secret` = `(public_a ^ private_b) mod p`
 3. decrypt `msg` with `shared secret`
 4. store (`g`,`p`,`private_a`, `public_a`)
   * start generating messages on the internet encrypted with `private_a`
