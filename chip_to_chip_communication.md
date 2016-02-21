@@ -1,40 +1,28 @@
-1. input - interrupt signal
-2. input - chip addressing A
-3. input - chip addressing B
-4. input / output - data bus
-5. input / output - data bus
-6. input / output - data bus
+2. input - interrupt signal
+
+5. input - chip addressing A
+6. input - chip addressing B
+
 7. input / output - data bus
 8. input / output - data bus
 9. input / output - data bus
 10. input / output - data bus
 11. input / output - data bus
-12. input - data bus addressing
-13. input - data bus addressing
-14. input - data bus addressing
-15. input - operation addressing
-16. input - operation addressing
+12. input / output - data bus
+13. input / output - data bus
+14. input / output - data bus
+
+15.
+18.
+19.
 
 ```
 interrupt function
-  am I being addressed (?)  // read chip addressing pins
-    (yes)
-    what operation is being performed (?)  // read the operation addressing pins
-      { binary read }
-        read word on data bus pins
-        read word on data address pins
-        shift data word to address
-        OR data word into buffer
-      {/binary read }
-      { binary write }
-        is the current index in bounds (?)
-          (yes)
-          set the current index on the data address pins
-          increment the current index
-          extract the byte from the buffer
-          write data word on data bus pins
-          (no)
-          increment operation counter
-      {/binary write }
-    (/yes)
+  read chip address pins
+  does the value of the address pins match mine?
+  (yes)
+    read the state of the pins
+    shift the values into the buffer at the current index
+    increment the index
+    if the index == max, reset the index
 ```
