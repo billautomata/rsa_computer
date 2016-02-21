@@ -100,7 +100,7 @@ After the user sends the message, the NSA computer lights up with the new inform
 ```
 ID: 3491, Message from Bill > Jericho!
 ID: 3491, MESSAGE ( data: 600761989541546499005717329889500488 )
-ID: 3491, PUBKEYA ( key: 2, 16034483, 4934484 )
+ID: 3491, PUBKEYA ( 2, 16034483, 4934484 )
 ID: 3491, PUBKEYB ( 2, 16034483, 12111349 )
 Adding keys to cracking queue...
 
