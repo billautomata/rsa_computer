@@ -62,6 +62,12 @@ p              16034483
 public key     4934484
 private key    5917539
 
+Write down your public key!
+
+private key    5917539
+
+You will need to enter it to check your messages.
+
 Posting your keys to the Message Server... done!
 
 ∆∆∆ Enter the message ∆∆∆
