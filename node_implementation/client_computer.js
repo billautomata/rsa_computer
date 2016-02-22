@@ -77,7 +77,6 @@ rl.on('line', (line) => {
           ]
         })
 
-
         // build lines
         var encrypted_lines = []
 

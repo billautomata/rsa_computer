@@ -1,30 +1,83 @@
 var bignum = require('bignum')
 
-module.exports = function(publickey){
+module.exports = function(opts){
 
   var _t = Date.now().valueOf()
-  var crack_index = bignum(2);
+  var _id = opts.id
+  var stop
+
+  var crack_index = bignum(opts.begin_index);
+  var end_index = bignum(opts.end_index)
   var privatekey;
-  var key = publickey
+
+  var key = {
+    generator: bignum(opts.generator),
+    prime: bignum(opts.prime),
+    publickey: bignum(opts.publickey)
+  }
+
+  var success, report
 
   function start(){
+    if(stop === true){
+      // console.log('aborting cracker', _id)
+      return;
 
-    if(key.generator.powm(crack_index, key.prime).eq(key.publickey)){
-      privatekey = bignum(crack_index)
-      console.log('cracked!')
-      console.log(privatekey.toString())
-      console.log('after',(Date.now().valueOf()-_t)/1000,'seconds')
     } else {
-      crack_index = crack_index.add(1)
-      if(crack_index.mod(10000).toNumber()===0){
-        console.log(crack_index.toString())
+      if(key.generator.powm(crack_index, key.prime).eq(key.publickey)){
+
+        stop = true
+        privatekey = bignum(crack_index)
+
+        if(success !== undefined){
+          return success(privatekey.toString(), _id, (Date.now().valueOf()-_t)/1000)
+        }
+
+      } else {
+
+        // not cracked, keep going
+        crack_index = crack_index.add(1)
+        if(crack_index.eq(end_index)){
+          console.log('worker',_id,'reached limit')
+          stop = true
+          return
+        }
+        if(crack_index.mod(10000).toNumber()===0){
+          // console.log('id', _id, 'status', stop)
+          report(_id, crack_index.toString())
+        }
+        return setImmediate(start)
+        // return process.nextTick(start)
       }
-      process.nextTick(start)
     }
   }
 
-  return {
-    start: start
+  function end(){
+    if(stop === true){
+      // console.log('\t\t\t\t\t\t\talready killed', _id)
+      return;
+    }
+    // console.log('\t\t\t\t\t\t\tkilling cracker', _id)
+    stop = true
   }
-  
+
+  function begin(){
+    stop = false
+    start()
+  }
+
+  return {
+    begin: begin,
+    end: end,
+    index: function(new_index){
+      crack_index = bignum(new_index)
+    },
+    success: function(f){
+      success = f
+    },
+    report: function(f){
+      report = f
+    }
+  }
+
 }
